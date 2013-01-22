@@ -1,0 +1,4 @@
+
+# ignore OS thumbnail cache files
+thumbs.db
+._*
