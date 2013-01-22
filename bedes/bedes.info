@@ -7,7 +7,7 @@
 
 ; Theme created by Drupal developer CG DESIGN
 
-name	     = ST BEDES
+name       = ST BEDES
 
 
 description = St Bedes High School website theme 
@@ -32,26 +32,26 @@ base theme = zen
   ; You can also override any of Zen's stylesheets or any module's stylesheets,
   ; an /extremely/ useful feature. See the excellent Drupal 6 Theme Guide at
   ; http://drupal.org/node/171209 for more details.
-stylesheets[all][]   = css/html-reset.css
-stylesheets[all][]   = css/wireframes.css
+; stylesheets[all][]   = css/html-reset.css
+; stylesheets[all][]   = css/wireframes.css
 
-stylesheets[all][]   = css/layout-fixed.css
-;stylesheets[all][]   = css/layout-liquid.css
+; stylesheets[all][]   = css/layout-fixed.css
+; stylesheets[all][]   = css/layout-liquid.css
 
 
-stylesheets[all][]   = css/page-backgrounds.css
+; stylesheets[all][]   = css/page-backgrounds.css
 stylesheets[all][]   = css/tabs.css
 stylesheets[all][]   = css/messages.css
 stylesheets[all][]   = css/pages.css
 stylesheets[all][]   = css/block-editing.css
-stylesheets[all][]   = css/blocks.css
-stylesheets[all][]   = css/navigation.css
-stylesheets[all][]   = css/panels-styles.css
-stylesheets[all][]   = css/views-styles.css
+; stylesheets[all][]   = css/blocks.css
+; stylesheets[all][]   = css/navigation.css
+; stylesheets[all][]   = css/panels-styles.css
+; stylesheets[all][]   = css/views-styles.css
 stylesheets[all][]   = css/nodes.css
-stylesheets[all][]   = css/comments.css
+; stylesheets[all][]   = css/comments.css
 stylesheets[all][]   = css/forms.css
-stylesheets[all][]   = css/fields.css
+; stylesheets[all][]   = css/fields.css
 stylesheets[print][] = css/print.css
 
 stylesheets[all][]   = css/bedes.css
@@ -63,21 +63,18 @@ stylesheets[all][]   = css/bedes.css
   ; Set the conditional stylesheets that are processed by IE.
 conditional-stylesheets[if IE][all][]       = css/ie.css
 conditional-stylesheets[if lte IE 6][all][] = css/ie6.css
+; conditional-stylesheets[if lte IE 8][all][] = css/ie8.css
 
   ; Optionally add some JavaScripts to your theme.
-; scripts[] = js/script.js
-
-	scripts[] = js/cufon.js
-	scripts[] = js/Rockwell_400.font.js
-	scripts[] = js/Rockwell_200.font.js
-	scripts[] = js/jquery-1.4.min.js
-	scripts[] = js/innerfade.js
-	scripts[] = js/scripts.js
-	scripts[] = js/jquery.mousewheel.js
-	scripts[] = js/jScrollPane.js	
-	scripts[] = js/jquery.waterwheelCarousel-1.2.2.min.js
-	
-	
+  scripts[] = js/cufon-yui.js
+  scripts[] = js/Rockwell_400.font.js
+  scripts[] = js/Rockwell_200.font.js
+  scripts[] = js/innerfade.js
+  scripts[] = js/jquery.mousewheel.js
+  scripts[] = js/jScrollPane.js 
+  scripts[] = js/jquery.waterwheelCarousel.1.3.js
+  scripts[] = js/jquery.dropDownLogin.js
+  scripts[] = js/initial.scripts.js
 
   ; The regions defined in Zen's default page.tpl.php file.  The name in
   ; brackets is the name of the variable in the page.tpl.php file, (e.g.
@@ -88,22 +85,22 @@ conditional-stylesheets[if lte IE 6][all][] = css/ie6.css
   ; To add a new region, copy Zen's page.tpl.php to your sub-theme's directory,
   ; add a line line to this file, and then add the new variable to your
   ; page.tpl.php template.
-regions[sidebar_first]  = First sidebar
-regions[sidebar_first2] = Sidebar Left Bottom
-regions[sidebar_second] = Second sidebar
-regions[navigation]     = Navigation bar
-regions[highlight]      = Highlighted content
-regions[content]  	= Content
-regions[content_left] 	= Content Left
-regions[content_right] 	= Content Right
+regions[top_banner] = Top Banner
+regions[sidebar_first]  = Top Left sidebar
+regions[sidebar_first2] = Bottom Left sidebar
+;regions[navigation]     = Navigation bar
+;regions[highlight]      = Highlighted content
+regions[content]    = Content
+regions[content_left]   = Front page left
+regions[content_right]  = Front page right
 
-regions[content_bottom]	= Content Bottom
+regions[content_bottom] = Coverflow region
 
 regions[header]         = Header
-regions[header_top]     = Header Top
+;regions[header_top]     = Header Top
 regions[footer_top]     = Footer Top
 regions[footer]         = Footer
-regions[page_closure]   = Page closure
+;regions[page_closure]   = Page closure
 
   ; Various page elements output by the theme can be toggled on and off. The
   ; "features" control which of these check boxes display on the

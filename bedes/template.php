@@ -76,79 +76,132 @@ function bedes_theme(&$existing, $type, $theme, $path) {
   return $hooks;
 }
 
-/**
- * Override or insert variables into all templates.
- *
- * @param $vars
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered (name of the .tpl.php file.)
- */
-/* -- Delete this line if you want to use this function
-function bedes_preprocess(&$vars, $hook) {
-  $vars['sample_variable'] = t('Lorem ipsum.');
+function bedes_menu_tree($tree,$class = 'menu'){
+	return "<ul class=\"$class\">\n $tree </ul>";
 }
-// */
 
 /**
- * Override or insert variables into the page templates.
- *
- * @param $vars
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered ("page" in this case.)
- */
-/* -- Delete this line if you want to use this function
-function bedes_preprocess_page(&$vars, $hook) {
-  $vars['sample_variable'] = t('Lorem ipsum.');
+* Return a multidimensional array of links for a navigation menu.
+*/
+function bedes_navigation_links($menu_name, $level = 0) {
+	// Don't even bother querying the menu table if no menu is specified.
+	if (empty($menu_name)) {
+		return array();
+	}
+
+	// Get the menu hierarchy for the current page.
+	$tree_page = menu_tree_page_data($menu_name);
+	// Also get the full menu hierarchy.
+	$tree_all = menu_tree_all_data($menu_name);
+
+	// Go down the active trail until the right level is reached.
+	while ($level-- > 0 && $tree_page) {
+		// Loop through the current level's items until we find one that is in trail.
+		while ($item = array_shift($tree_page)) {
+			if ($item['link']['in_active_trail']) {
+				// If the item is in the active trail, we continue in the subtree.
+				$tree_page = empty($item['below']) ? array() : $item['below'];
+				break;
+			}
+		}
+	}
+
+	return bedes_navigation_links_level($tree_page, $tree_all);
 }
-// */
+
 
 /**
- * Override or insert variables into the node templates.
- *
- * @param $vars
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered ("node" in this case.)
- */
-/* -- Delete this line if you want to use this function
-function bedes_preprocess_node(&$vars, $hook) {
-  $vars['sample_variable'] = t('Lorem ipsum.');
-
-  // Optionally, run node-type-specific preprocess functions, like
-  // kipl_preprocess_node_page() or bedes_preprocess_node_story().
-  $function = __FUNCTION__ . '_' . $vars['node']->type;
-  if (function_exists($function)) {
-    $function($vars, $hook);
-  }
+* Helper function for themename_navigation_links to recursively create an array of links.
+* (Both trees are required in order to include every menu item and active trail info.)
+*/
+function bedes_navigation_links_level($tree_page, $tree_all) {
+	$links = array();
+	foreach ($tree_all as $key => $item) {
+		$item_page = $tree_page[$key];
+		$item_all = $tree_all[$key];
+		if (!$item_all['link']['hidden']) {
+			$class = '';
+			$l = $item_all['link']['localized_options'];
+			$l['href'] = $item_all['link']['href'];
+			$l['title'] = $item_all['link']['title'];
+			if ($item_page['link']['in_active_trail']) {
+				$class = ' active-trail';
+			}
+			if ($item_all['below']) {
+				$l['children'] = bedes_navigation_links_level($item_page['below'], $item_all['below']);
+			}
+			// Keyed with the unique mlid to generate classes in theme_links().
+			$links['menu-'. $item_all['link']['mlid'] . $class] = $l;
+		}
+	}
+	return $links;
 }
-// */
-
-/**
- * Override or insert variables into the comment templates.
- *
- * @param $vars
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered ("comment" in this case.)
- */
-/* -- Delete this line if you want to use this function
-function bedes_preprocess_comment(&$vars, $hook) {
-  $vars['sample_variable'] = t('Lorem ipsum.');
-}
-// */
 
 /**
- * Override or insert variables into the block templates.
- *
- * @param $vars
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered ("block" in this case.)
- */
-/* -- Delete this line if you want to use this function
-function bedes_preprocess_block(&$vars, $hook) {
-  $vars['sample_variable'] = t('Lorem ipsum.');
+* Return a themed set of links. (Extended to support multidimensional arrays of links.) 
+*/
+function bedes_links($links, $attributes = array('class' => 'links')) {
+	$output = '';
+
+	if (count($links) > 0) {
+		$output = '<ul'. drupal_attributes($attributes) .'>';
+
+		$num_links = count($links);
+		$i = 1;
+
+		foreach ($links as $key => $link) {
+		$class = $key;
+
+		// Add first, last and active classes to the list of links to help out themers.
+		if ($i == 1) {
+			$class .= ' first';
+		}
+		if ($i == $num_links) {
+			$class .= ' last';
+		}
+		if (isset($link['href']) && ($link['href'] == $_GET['q'] || ($link['href'] == '<front>' && drupal_is_front_page()))) {
+			$class .= ' active';
+		}
+		// Added: if the link has child items, add a haschildren class
+		if (isset($link['children'])) {
+			$class .= ' haschildren';
+		}
+		$output .= '<li'. drupal_attributes(array('class' => $class)) .'>';
+
+		if (isset($link['href'])) {
+			// Pass in $link as $options, they share the same keys.
+			$output .= l($link['title'], $link['href'], $link);
+		}
+		else if (!empty($link['title'])) {
+			// Some links are actually not links, but we wrap these in <span> for adding title and class attributes
+			if (empty($link['html'])) {
+				$link['title'] = check_plain($link['title']);
+			}
+			$span_attributes = '';
+			if (isset($link['attributes'])) {
+				$span_attributes = drupal_attributes($link['attributes']);
+			}
+			$output .= '<span'. $span_attributes .'>'. $link['title'] .'</span>';
+		}
+
+		// Added: if the link has child items, print them out recursively
+		if (isset($link['children'])) {
+			$output .= "\n" . theme('links', $link['children'], array('class' =>'sublinks'));
+		}
+
+		$i++;
+			$output .= "</li>\n";
+		}
+
+		$output .= '</ul>';
+	}
+
+	return $output;
 }
-// */
+
+/**
+* generates markup for the primary links
+*/
+function bedes_primary_links() {
+	return bedes_navigation_links(variable_get('menu_primary_links_source', 'primary-links'));
+}

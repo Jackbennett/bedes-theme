@@ -30,7 +30,7 @@
  *   'slide_ui_parent':	'news',
  *	 'slide_ui_text':	profilio text ul id
  *   'pause_button_id':  pause button id,
- *   'slide_nav_id':		slide navigation ul id
+ *   'slide_nav_id':	slide navigation ul id
  *  }); 
  *
 
@@ -144,10 +144,9 @@
             
     
     //set options button click event
-    jQuery.setOptionsButtonEvent = function()
+    jQuery.setOptionsButtonEvent = function( settings )
     {
-    	
-  
+
     $("#"+settings.slide_nav_id+" li").each(function() {
                 // add click functionality to buttons
                 
@@ -160,13 +159,14 @@
                     button_class_string   = split_button_class_string.pop();
                     curr_slide_id_number  = parseFloat(button_class_string);
                     next_slide_id_number  = curr_slide_id_number - 1;
-                    settings.slide_timer_on = 'no'
+                    settings.slide_timer_on = 'no';
                   	$.skip();
    
                 }); // click
             }); //each
     
 	}
+
     
 
     $.innerfade = function(container, options) 

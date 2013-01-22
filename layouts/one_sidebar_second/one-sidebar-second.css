@@ -33,20 +33,16 @@
 
 .zen-one-sidebar-second .panel-content {
   float: left; /* LTR */
-  width: 640px;
+  width: 71%;
   margin-left: 0; /* LTR */
-  margin-right: -640px; /* LTR */ /* Negative value of #content's width + left margin. */
+  margin-right: -71%; /* LTR */ /* Negative value of #content's width + left margin. */
   padding: 0; /* DO NOT CHANGE. Add padding or margin to #content-inner. */
 }
 
 .zen-one-sidebar-second .panel-sidebar-first {
   float: left; /* LTR */
-  width: 320px;
-  margin-left: 640px; /* LTR */ /* Width of #content. */
-  margin-right: -960px; /* LTR */ /* Negative value of #sidebar-first's width + left margin. */
+  width: 27%;
+  margin-left: 73%; /* LTR */ /* Width of #content. */
+ /* margin-right: -960px; *//* LTR */ /* Negative value of #sidebar-first's width + left margin. */
   padding: 0; /* DO NOT CHANGE. Add padding or margin to #sidebar-first-inner. */
-}
-
-.zen-one-sidebar-second .panel-sidebar-first .panel-sidebar-first-inner {
-  margin-left: 20px;
 }
