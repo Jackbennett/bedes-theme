@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* CSS Document for top slider 
+*/
+
+ul#slide_control li,
+#portfolio { display:block; margin:0; padding:0;   width:634px; height:335px;  }
+#portfolio li{ display:block; margin:0; padding:0;   width:634px; height:335px; }
+
+#portfolio img{ }
+#slide_control li{     list-style: none;     display: block;     float:left; }
+#prev_button, #next_button, #pause_button, #last_button{     margin-left: 0px; }
+#slide_control {     left:540px;     position:absolute;     top:238px;     z-index:5000; }
+ul#portfolio li img{ 	  }
+.fade{ 	margin-bottom: 2em; }
+.fade p{ 	margin-bottom: 2em; 	text-align: center; 	width: 100%; 	background: #fff; }
+
+
+#slide_nav{ display:block; margin:0; padding:0; position: absolute; left:22px; bottom: 0px;  z-index: 5000; height:28px;}
+ul#slide_nav li { list-style:none;   display: block; float: left;  padding:0; margin:0 4px 0 0; height:7px; width:8px; background:url(../images/sliderBullet.png) left bottom no-repeat; font-size:0; line-height:0; text-decoration:none; }
+#slide_nav li:hover { cursor: pointer; cursor: hand;  background:url(../images/sliderBullet.png) left top no-repeat;  } 
+
+ul#slide_nav li#button_selected {background:url(../images/sliderBullet.png) left top no-repeat; }
+ul#slide_nav li#button_selected:hover { background:url(../images/sliderBullet.png) left top no-repeat; } 
+
+/*-- first & last buttons --*/
+
+ul#portfolio-desc{     text-align: left;     padding: 3px;     border: 0px solid;     list-style: none; width:100%;   }
+ul#portfolio-desc li { width:100%; float:left; top:0; left:0;}
+ul#portfolio-desc li .desc01{ display:block; margin:0; padding:0 32px 0 0; color:#000401; font-size:25px; line-height:26px; width:561px; float:right;  }
+ul#portfolio-desc li .desc{ display:block; margin:0; padding:21px 0 0 0; height:258px;  }
+ul#portfolio-desc li  h5{  text-align:right; display:block; width:100%;} 
+ul#portfolio-desc li  h5 cufon{   overflow:hidden; padding:0 0 2px 0;}
+ul#portfolio-desc li  h3{  float:right; display:block; margin:0; padding:0; clear:both; font-size:18px; color:#f0b310; line-height:18px; } 
+ 
+/*-- end next & prev buttons --*/
+
+
+
+
+
+
+
+
+
+
+
+
